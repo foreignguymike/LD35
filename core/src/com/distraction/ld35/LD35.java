@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.distraction.ld35.gsm.GSM;
+import com.distraction.ld35.gsm.PlayState;
 
 public class LD35 extends ApplicationAdapter {
 	
@@ -13,10 +14,11 @@ public class LD35 extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 1, 1, 1);
 		
 		sb = new SpriteBatch();
 		gsm = new GSM();
+		gsm.push(new PlayState(gsm));
 	}
 
 	@Override

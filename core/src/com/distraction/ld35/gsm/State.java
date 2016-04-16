@@ -1,11 +1,12 @@
 package com.distraction.ld35.gsm;
 
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.distraction.ld35.Vars;
 
-public abstract class State {
+public abstract class State extends InputAdapter {
 	
 	protected GSM gsm;
 	protected OrthographicCamera cam;
