@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -13,6 +14,7 @@ public class Res {
 	
 	private static Map<String, TextureAtlas> atlases = new HashMap<String, TextureAtlas>();
 	private static Map<String, BitmapFont> fonts = new HashMap<String, BitmapFont>();
+	private static Map<String, Sound> sounds = new HashMap<String, Sound>();
 	
 	public static void addAtlas(String s, String path) {
 		atlases.put(s, new TextureAtlas(path));
@@ -32,6 +34,14 @@ public class Res {
 	
 	public static BitmapFont getFont(String s) {
 		return fonts.get(s);
+	}
+	
+	public static void addSound(String s, String path) {
+		sounds.put(s, Gdx.audio.newSound(Gdx.files.internal(path)));
+	}
+	
+	public static Sound getSound(String s) {
+		return sounds.get(s);
 	}
 	
 }

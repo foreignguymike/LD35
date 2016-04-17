@@ -29,7 +29,7 @@ public class End extends Shape {
 	}
 	
 	public void setBack() {
-		ydest = bgHeight / 2;
+		ydest = bgHeight / 2 + 5;
 	}
 	
 	public void setFront() {
@@ -54,7 +54,7 @@ public class End extends Shape {
 	
 	@Override
 	public void render(SpriteBatch sb) {
-		sb.draw(bg, x - bgWidth / 2, y - bgHeight / 2);
+		//sb.draw(bg, x - bgWidth / 2, y - bgHeight / 2);
 		super.render(sb);
 	}
 	

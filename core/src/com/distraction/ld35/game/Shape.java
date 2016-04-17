@@ -8,7 +8,7 @@ import com.distraction.ld35.Vars;
 public class Shape {
 	
 	protected int numSides;
-	public static float speed = 50;
+	public static float speed = 60;
 	
 	protected float x;
 	protected float y;

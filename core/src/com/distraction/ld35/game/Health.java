@@ -25,6 +25,10 @@ public class Health {
 		health -= damage;
 	}
 	
+	public int getHealth() {
+		return health;
+	}
+	
 	public void render(SpriteBatch sb) {
 		sb.draw(image, Vars.WIDTH - 54, 67, width, height * (1f * health / maxHealth));
 	}

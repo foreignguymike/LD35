@@ -23,7 +23,7 @@ public class Shot {
 		this.type = type;
 		this.x = x;
 		this.y = y;
-		speed = 500;
+		speed = 800;
 		
 		if(type == Type.PLUS) {
 			image = Res.getAtlas("pack").findRegion("plus");

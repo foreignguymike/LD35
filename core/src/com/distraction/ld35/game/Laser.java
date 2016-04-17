@@ -29,8 +29,14 @@ public class Laser {
 		fireInterval = 0.1f;
 	}
 	
-	public void setPosition(float y) {
-		this.y = y;
+	public void setPosition(float ny) {
+		y = ny;
+		if(y < 80) {
+			y = 80;
+		}
+		if(y > Vars.HEIGHT - 60) {
+			y = Vars.HEIGHT - 60;
+		}
 	}
 	
 	public void setType(Type type) {
@@ -61,12 +67,6 @@ public class Laser {
 	
 	public void update(float dt) {
 		fireTime += dt;
-		if(y < 80) {
-			y = 80;
-		}
-		if(y > Vars.HEIGHT - 60) {
-			y = Vars.HEIGHT - 60;
-		}
 	}
 	
 	public void render(SpriteBatch sb) {

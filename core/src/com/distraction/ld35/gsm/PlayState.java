@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.distraction.ld35.Res;
 import com.distraction.ld35.Vars;
 import com.distraction.ld35.game.End;
+import com.distraction.ld35.game.Explosion;
 import com.distraction.ld35.game.Health;
 import com.distraction.ld35.game.Laser;
 import com.distraction.ld35.game.Shape;
@@ -28,6 +29,7 @@ public class PlayState extends State {
 	
 	private Laser laser;
 	private List<Shot> shots;
+	private List<Explosion> explosions;
 	
 	private Health health;
 	
@@ -60,12 +62,10 @@ public class PlayState extends State {
 		interval = 4f;
 		
 		shapes.add(getRandomShape());
-//		shapes.add(new Shape(6, xs[0]));
-//		shapes.add(new Shape(6, xs[1]));
-//		shapes.add(new Shape(6, xs[2]));
 		
 		laser = new Laser(xs[3]);
 		shots = new ArrayList<Shot>();
+		explosions = new ArrayList<Explosion>();
 		
 		Gdx.input.setInputProcessor(this);
 		bg = Res.getAtlas("pack").findRegion("bg");
@@ -114,6 +114,11 @@ public class PlayState extends State {
 			int h1 = shape.getHeight();
 			for(int j = 0; j < shots.size(); j++) {
 				Shot shot = shots.get(j);
+				if(shot.getx() < -30) {
+					shots.remove(j);
+					j--;
+					continue;
+				}
 				float x2 = shot.getx();
 				float y2 = shot.gety();
 				int w2 = shot.getWidth();
@@ -130,6 +135,8 @@ public class PlayState extends State {
 					}
 					shots.remove(j);
 					j--;
+					explosions.add(new Explosion(shot.getType() == Type.PLUS ? Res.getAtlas("pack").findRegion("plus") : Res.getAtlas("pack").findRegion("minus"), shot.getx(), shot.gety(), 200, 0.5f));
+					Res.getSound("shift").play();
 				}
 			}
 			for(int j = 0; j < ends[0].length; j++) {
@@ -152,19 +159,24 @@ public class PlayState extends State {
 						}
 						ends[0][j] = ends[1][j];
 						ends[0][j].setFront();
+						explosions.add(new Explosion(Res.getAtlas("pack").findRegion("endbg"), shape.getx(), shape.gety(), 200, 0.5f));
 						ends[1][j] = new End(newNumSides, xs[j]);
 						ends[1][j].setBack();
 						ends[1][j].sety(-50);
 						score++;
 						if(score % 5 == 0) {
 							level++;
-							interval -= 0.3f;
+							interval *= 0.9f;
 							Shape.incrementSpeed();
+							Res.getSound("level").play();
 						}
+						Res.getSound("match").play();
 						break;
 					}
 					else {
 						health.hit(5);
+						explosions.add(new Explosion(Res.getAtlas("pack").findRegion("shape" + shape.getNumSides()), shape.getx(), shape.gety(), 200, 0.5f));
+						Res.getSound("miss").play();
 					}
 				}
 			}
@@ -179,8 +191,17 @@ public class PlayState extends State {
 				end.update(dt);
 			}
 		}
+		for(int i = 0; i < explosions.size(); i++) {
+			Explosion explosion = explosions.get(i);
+			explosion.update(dt);
+		}
+		
 		
 		laser.update(dt);
+		
+		if(health.getHealth() <= 0) {
+			gsm.set(new GameOverState(gsm, score));
+		}
 		
 	}
 	
@@ -208,6 +229,9 @@ public class PlayState extends State {
 		for(Shot shot : shots) {
 			shot.render(sb);
 		}
+		for(Explosion explosion : explosions) {
+			explosion.render(sb);
+		}
 		
 		sb.end();
 		
@@ -231,17 +255,20 @@ public class PlayState extends State {
 	public boolean touchDown(int x, int y, int p, int b) {
 		if(laser.shoot()) {
 			shots.add(new Shot(laser.getType(), laser.getx(), laser.gety()));
+			Res.getSound("laser").play();
 		}
 		return true;
 	}
 	
 	@Override
 	public boolean keyDown(int k) {
-		if(k == Keys.NUM_1) {
+		if(k == Keys.NUM_1 && laser.getType() == Type.MINUS) {
 			laser.setType(Type.PLUS);
+			Res.getSound("switch").play();
 		}
-		else if(k == Keys.NUM_2) {
+		else if(k == Keys.NUM_2 && laser.getType() == Type.PLUS) {
 			laser.setType(Type.MINUS);
+			Res.getSound("switch").play();
 		}
 		return true;
 	}
