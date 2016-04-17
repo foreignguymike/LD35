@@ -7,14 +7,12 @@ import com.distraction.ld35.Res;
 public class End extends Shape {
 	
 	private TextureRegion bg;
-	private int bgWidth;
 	private int bgHeight;
 	private float ydest;
 	
 	public End(int numSides, float x) {
 		super(numSides, x);
 		bg = Res.getAtlas("pack").findRegion("endbg");
-		bgWidth = bg.getRegionWidth();
 		bgHeight = bg.getRegionHeight();
 		setFront();
 		y = ydest;

@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Music.OnCompletionListener;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -73,6 +75,11 @@ public class PlayState extends State {
 		health = new Health();
 		
 		scoreFont = Res.getFont("score");
+		
+		Res.getMusic().setLooping(true);
+		Res.getMusic().setVolume(0.5f);
+		Res.getMusic().play();
+		
 	}
 	
 	private int getRandomNumSides() {
@@ -200,6 +207,7 @@ public class PlayState extends State {
 		laser.update(dt);
 		
 		if(health.getHealth() <= 0) {
+			Res.getMusic().stop();
 			gsm.set(new GameOverState(gsm, score));
 		}
 		

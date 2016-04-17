@@ -27,6 +27,7 @@ public class LD35 extends ApplicationAdapter {
 		Res.addSound("switch", "switch.wav");
 		Res.addSound("shift", "shift.wav");
 		Res.addSound("level", "level.wav");
+		Res.loadMusic("ld35.ogg");
 		
 		sb = new SpriteBatch();
 		gsm = new GSM();
