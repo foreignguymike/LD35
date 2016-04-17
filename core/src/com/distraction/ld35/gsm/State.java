@@ -22,4 +22,10 @@ public abstract class State extends InputAdapter {
 	public abstract void update(float dt);
 	public abstract void render(SpriteBatch sb);
 	
+	protected void setMouse(Vector3 m, float x, float y, OrthographicCamera cam) {
+		m.x = x;
+		m.y = y;
+		cam.unproject(m);
+	}
+	
 }

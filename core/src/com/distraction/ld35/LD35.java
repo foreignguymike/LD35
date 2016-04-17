@@ -14,11 +14,15 @@ public class LD35 extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(1, 0, 1, 1);
+		
+		Res.addAtlas("pack", "pack.pack");
+		Res.addFont("score", "vcr_osd.ttf", 30);
 		
 		sb = new SpriteBatch();
 		gsm = new GSM();
 		gsm.push(new PlayState(gsm));
+		
 	}
 
 	@Override
