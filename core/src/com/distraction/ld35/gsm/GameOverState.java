@@ -39,7 +39,6 @@ public class GameOverState extends State {
 	
 	@Override
 	public boolean touchDown(int x, int y, int p, int b) {
-		gsm.set(new MenuState(gsm));
 		return true;
 	}
 	
